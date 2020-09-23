@@ -2,6 +2,7 @@ import requests
 import jiraConfig
 from requests.auth import HTTPBasicAuth
 import json
+import slackWebhook
 
 url = jiraConfig.httpResource["url"]
 # It indicates "Story Points"
@@ -40,7 +41,8 @@ for user in userlist:
             storyPoint += itemStoryPointsField
 
     # story point > 13, print alert to slack
-    if storyPoint != 0.0:
+    if storyPoint >= 13.0:
       print("Name " + item['fields']['assignee']['displayName'] + ", total:" + str(storyPoint))
+      slackWebhook.sendToSlack(item['fields']['assignee']['displayName'], str(storyPoint))
     else:
       print("Name " + user)
