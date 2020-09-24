@@ -37,6 +37,12 @@ python personalStoryPoint.py
 please refer to slackApp/app.py, this file contains slack's event api. you could get more detail information
 from [python-slackclient](https://github.com/slackapi/python-slackclient)
 ### Requirements
-1. python app.py
-2. ngrok http 3000
-3. to modify the "Request URL" in Slack App, such as https://xxxxxx.ngrok.io/slack/events
+1. To setup bot token & signing secret token before lauching server
+```base
+export SLACK_BOT_TOKEN='************'
+export SLACK_SIGNING_SECRET='************'
+```
+
+2. python app.py
+3. ngrok http 3000
+4. to modify the "Request URL" in Slack App, such as https://xxxxxx.ngrok.io/slack/events
