@@ -9,9 +9,9 @@ headers = {
     "Content-Type": "application/json"
 }
 
-def sendToSlack(name, storyPoint):
+def sendToSlack(text):
     payload = json.dumps({
-        "text": name + " has "+ storyPoint + " incomplete story sprints"
+        "text": text
     })
     requests.request(
         "POST",

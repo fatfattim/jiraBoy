@@ -44,7 +44,8 @@ for user in userlist:
 
     # story point > 13, print alert to slack
     if storyPoint >= 13.0:
-      print("Name " + item['fields']['assignee']['displayName'] + ", incomplete story points:" + str(storyPoint))
-      slackWebhook.sendToSlack(item['fields']['assignee']['displayName'], str(storyPoint))
+      slackMessage = item['fields']['assignee']['displayName'] + " has "+ str(storyPoint) + " incomplete story sprints"
+      print(slackMessage)
+      # slackWebhook.sendToSlack(slackWebhook)
     else:
       print("Name " + user)
