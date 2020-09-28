@@ -11,7 +11,7 @@ headers = {
 
 def sendToSlack(name, storyPoint):
     payload = json.dumps({
-        "text": name + " has "+ storyPoint + " story sprints"
+        "text": name + " has "+ storyPoint + " incomplete story sprints"
     })
     requests.request(
         "POST",
