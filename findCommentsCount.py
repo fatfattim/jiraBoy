@@ -4,6 +4,8 @@ from requests.auth import HTTPBasicAuth
 import json
 import slackWebhook
 
+userDictionary = { }
+
 def queryCommentsCount(startAt, maxResult):
     url = jiraConfig.httpResource["url"]
 
@@ -14,7 +16,7 @@ def queryCommentsCount(startAt, maxResult):
 
     # To list tickets that do not have assignee
     payload = json.dumps({
-        "jql": "project = OTP AND issuekey >= OTP-1999 AND status in (\"In Progress\", Open, Pending, Verifying) order by created DESC",
+        "jql": "project = OTP AND issuekey >= OTP-13 order by created DESC",
         "fields": [
             "comment"
         ],
@@ -30,13 +32,21 @@ def queryCommentsCount(startAt, maxResult):
     jsonText = json.loads(response.text)
     jsonArray = jsonText['issues']
 
-    #print(json.dumps(json.loads(response.text), sort_keys=True, indent=8, separators=(",", ": ")))
+    # print(json.dumps(json.loads(response.text), sort_keys=True, indent=8, separators=(",", ": ")))
     for item in jsonArray:
-        commentTotal = item['fields']['comment']['total']
+        commentJson = item['fields']['comment']
+        commentTotal = commentJson['total']
         if commentTotal > 0:
-            print("Name " + item['key'] + " comments count: " + str(commentTotal))
-    return jsonText['total']
+            for comment in commentJson['comments']:
+                count = 1
+                displayName = comment['author']['displayName']
+                if userDictionary.get(displayName) != None:
+                    count = userDictionary.get(displayName)
+                    count += 1
 
+                userDictionary[displayName] = count
+                
+    return jsonText['total']
 
 maxResult = 20
 startAt = 0
@@ -46,4 +56,6 @@ totalCount = queryCommentsCount(startAt, maxResult)
 while startAt + maxResult < totalCount:
     startAt += maxResult 
     queryCommentsCount(startAt, maxResult)
+
+print(userDictionary)
 # slackWebhook.sendToSlack(slackMessage)
