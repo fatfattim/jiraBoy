@@ -19,6 +19,7 @@ for user in userlist:
         "jql": "project = OTP AND assignee in ("+user+") AND Sprint in openSprints() AND Sprint not in futureSprints() AND Sprint != 1445 ORDER BY priority DESC",
         "fields": [
             "assignee",
+            "status",
             storyPointsField
         ],
         "startAt": 0,
@@ -37,12 +38,14 @@ for user in userlist:
     #print(json.dumps(json.loads(response.text), sort_keys=True, indent=8, separators=(",", ": ")))
     for item in jsonArray:
         itemStoryPointsField = item['fields'][storyPointsField]
-        if itemStoryPointsField != None:
+        status = item['fields']['status']['statusCategory']['key']
+        if itemStoryPointsField != None and status != "done":
             storyPoint += itemStoryPointsField
 
     # story point > 13, print alert to slack
     if storyPoint >= 13.0:
-      print("Name " + item['fields']['assignee']['displayName'] + ", total:" + str(storyPoint))
-      slackWebhook.sendToSlack(item['fields']['assignee']['displayName'], str(storyPoint))
+      slackMessage = item['fields']['assignee']['displayName'] + " has "+ str(storyPoint) + " incomplete story sprints"
+      print(slackMessage)
+      # slackWebhook.sendToSlack(slackWebhook)
     else:
       print("Name " + user)
