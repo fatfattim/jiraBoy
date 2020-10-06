@@ -39,4 +39,5 @@ for item in jsonArray:
     print("Name " + item['key'])
 
 slackMessage = "Please give assignees to these release tickets, " + ', '.join(ticketNotVerified) 
+print(slackMessage)
 # slackWebhook.sendToSlack(slackMessage)
