@@ -5,7 +5,11 @@ import json
 import slackWebhook
 
 userDictionary = { }
-
+# Purpose
+# 1. you can list the active user in this project
+# 2. you can know the count of comments for attendee in this project
+# 3. you can trace who leave project and enter this project by modify issuekey's logic
+# for example, you can compare the "issuekey <= ST-8000 AND issuekey >= ST-5000" with "issuekey < ST-5000"
 def queryCommentsCount(startAt, maxResult):
     url = jiraConfig.httpResource["url"]
 
@@ -57,5 +61,7 @@ while startAt + maxResult < totalCount:
     startAt += maxResult 
     queryCommentsCount(startAt, maxResult)
 
+# To sort dictionary and reverse it
+# hello = sorted(thisdict.items(), key=lambda x: x[1], reverse=True)
 print(userDictionary)
 # slackWebhook.sendToSlack(slackMessage)
