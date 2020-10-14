@@ -33,6 +33,10 @@ To modify jiraConfig.py file
 ### Step 4
 python personalStoryPoint.py
 
+## Reference
+
+1. [Jira API](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-fields/)
+
 ## Slack App
 please refer to slackApp/app.py, this file contains slack's event api. you could get more detail information
 from [python-slackclient](https://github.com/slackapi/python-slackclient)
