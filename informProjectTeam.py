@@ -12,7 +12,7 @@ headers = {
 
 def informByReleaseVersionList(releaseList):
     for release in releaseList:
-      jql = "project = OTP AND fixVersion = \""+release+"\""
+      jql = "project = OTP AND issuetype != Release AND fixVersion = \""+release+"\""
       payload = json.dumps({
           "jql": jql,
           "fields": [
@@ -30,7 +30,7 @@ def informByReleaseVersionList(releaseList):
 
       jsonText = json.loads(response.text)
       jsonArray = jsonText['issues']
-      projectTeam = []
+      #print(json.dumps(json.loads(response.text), sort_keys=True, indent=8, separators=(",", ": ")))
       print(release)
       for item in jsonArray:
         issueLinks = item['fields']['issuelinks']
@@ -39,8 +39,10 @@ def informByReleaseVersionList(releaseList):
           continue
         for issue in issueLinks:
             if 'outwardIssue' in issue:
-                if issue['outwardIssue']['key'].find('MM-') != -1:
-                    print("Release version: "+"---"+"Player: "+item['key']+" Live Product: "+issue['outwardIssue']['key'])
-
-#print(json.dumps(json.loads(response.text), sort_keys=True, indent=8, separators=(",", ": ")))
+                projectIssue = issue['outwardIssue']['key']
+                if projectIssue.find('MM-') != -1:
+                    print("-> Live Product: "+projectIssue)
+                elif projectIssue.find('ST-') != -1:
+                    print("-> Saku: "+projectIssue)
+    
 
