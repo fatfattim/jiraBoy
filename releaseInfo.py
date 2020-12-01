@@ -33,7 +33,9 @@ fixVersionsList = []
 
 # you can print the response from below codes
 for item in jsonArray:
-  name = item['fields']['fixVersions'][0]['name']
-  fixVersionsList.append(name)
+  fixVersions = item['fields']['fixVersions']
+  for fixVersion in fixVersions:
+    name = fixVersion['name']
+    fixVersionsList.append(name)
 
 informProjectTeam.informByReleaseVersionList(fixVersionsList)

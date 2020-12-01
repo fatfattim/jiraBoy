@@ -12,7 +12,7 @@ headers = {
 
 def informByReleaseVersionList(releaseList):
     for release in releaseList:
-      jql = "project = OTP AND issuetype != Release AND fixVersion = \""+release+"\""
+      jql = "project = OTP AND fixVersion = \""+release+"\""
       payload = json.dumps({
           "jql": jql,
           "fields": [
@@ -38,11 +38,15 @@ def informByReleaseVersionList(releaseList):
         if len(issueLinks) == 0:
           continue
         for issue in issueLinks:
+            # You should set jira issue with "causes" or "blocks", then you can get "outwardIssue" rather than "inwardIssue"
             if 'outwardIssue' in issue:
                 projectIssue = issue['outwardIssue']['key']
-                if projectIssue.find('MM-') != -1:
+                if projectIssue.find('MB-') != -1:
                     print("-> Live Product: "+projectIssue)
                 elif projectIssue.find('ST-') != -1:
-                    print("-> Saku: "+projectIssue)
+                    print("-> Saku issue: "+projectIssue)
+                elif projectIssue.find('NASA-') != -1:
+                    print("-> Saku feature: "+projectIssue)
+      print("")
     
 
