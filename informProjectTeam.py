@@ -42,10 +42,12 @@ def informByReleaseVersionList(releaseList):
             if 'outwardIssue' in issue:
                 projectIssue = issue['outwardIssue']['key']
                 if projectIssue.find('MB-') != -1:
-                    print("-> Live Product: "+projectIssue)
+                    print("-> BV Live: "+projectIssue)
                 elif projectIssue.find('ST-') != -1:
                     print("-> Saku issue: "+projectIssue)
                 elif projectIssue.find('NASA-') != -1:
+                    print("-> Saku feature: "+projectIssue)
+                elif projectIssue.find('SEB-') != -1:
                     print("-> Saku feature: "+projectIssue)
       print("")
     
